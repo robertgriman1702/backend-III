@@ -33,5 +33,13 @@ export const ordersRepository = {
 
   findStoreById: async (id) => {
     return StoreModel.findById(id);
+  },
+
+  updateProof: async (id, proof) => {
+    return OrderModel.findByIdAndUpdate(
+      id,
+      { proof },
+      { new: true, runValidators: true }
+    );
   }
 };

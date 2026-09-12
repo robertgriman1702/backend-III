@@ -44,3 +44,12 @@ export const deleteOrder = async (req, res, next) => {
     next(error);
   }
 };
+
+export const uploadOrderProof = async (req, res, next) => {
+  try {
+    const order = await ordersService.addProof(req.params.oid, req.file);
+    res.json({ status: "success", payload: order });
+  } catch (error) {
+    next(error);
+  }
+};

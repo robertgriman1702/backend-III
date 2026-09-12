@@ -1,8 +1,13 @@
 import { Router } from "express";
-import OrderModel from "../models/order.model.js";
-import UserModel from "../models/user.model.js";
-import StoreModel from "../models/store.model.js";
-import { getOrders, getOrderById, createOrder, updateOrderStatus, deleteOrder } from "../controllers/orders.controller.js";
+import {
+  getOrders,
+  getOrderById,
+  createOrder,
+  updateOrderStatus,
+  deleteOrder,
+  uploadOrderProof
+} from "../controllers/orders.controller.js";
+import { handleUpload, uploadOrderProof as uploadOrderProofMiddleware } from "../middlewares/multer.js";
 
 const router = Router();
 
@@ -15,5 +20,7 @@ router.post("/", createOrder);
 router.put("/:oid/status", updateOrderStatus);
 
 router.delete("/:oid", deleteOrder);
+
+router.post("/:oid/proof", handleUpload(uploadOrderProofMiddleware), uploadOrderProof);
 
 export default router;

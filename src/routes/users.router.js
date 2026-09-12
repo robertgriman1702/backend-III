@@ -1,6 +1,13 @@
 import { Router } from "express";
-import UserModel from "../models/user.model.js";
-import { getUsers, getUserById, createUser, updateUser, deleteUser } from "../controllers/users.controller.js";
+import {
+  getUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser,
+  uploadUserDocument
+} from "../controllers/users.controller.js";
+import { handleUpload, uploadUserDocument as uploadUserDocumentMiddleware } from "../middlewares/multer.js";
 
 const router = Router();
 
@@ -13,5 +20,7 @@ router.post("/", createUser);
 router.put("/:uid", updateUser);
 
 router.delete("/:uid", deleteUser);
+
+router.post("/:uid/documents", handleUpload(uploadUserDocumentMiddleware), uploadUserDocument);
 
 export default router;

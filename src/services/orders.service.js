@@ -27,9 +27,14 @@ export const ordersService = {
     const storeFound = await ordersRepository.findStoreById(store);
     if (!storeFound) throw new NotFoundError("Tienda no encontrada");
 
-    const total = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    const total = items.reduce((accumulator, item) => accumulator + item.price * item.quantity, 0);
 
-    const newOrder = { ...orderData, total, status: "created", priority: orderData.priority ?? "normal" };
+    const newOrder = {
+      ...orderData,
+      total,
+      status: "created",
+      priority: orderData.priority ?? "normal"
+    };
 
     return ordersRepository.create(newOrder);
   },
@@ -46,6 +51,20 @@ export const ordersService = {
 
   deleteOrder: async (id) => {
     const order = await ordersRepository.delete(id);
+    if (!order) throw new NotFoundError("Pedido no encontrado");
+    return order;
+  },
+
+  addProof: async (id, file) => {
+    const proof = {
+      filename: file.filename,
+      originalName: file.originalname,
+      mimeType: file.mimetype,
+      size: file.size,
+      uploadedAt: new Date()
+    };
+
+    const order = await ordersRepository.updateProof(id, proof);
     if (!order) throw new NotFoundError("Pedido no encontrado");
     return order;
   }

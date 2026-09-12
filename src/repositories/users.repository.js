@@ -22,6 +22,14 @@ export const usersRepository = {
   },
 
   delete: async (id) => {
-    return UserModel.findByIdAndDelete(id)
+    return UserModel.findByIdAndDelete(id);
+  },
+
+  addDocument: async (id, document) => {
+    return UserModel.findByIdAndUpdate(
+      id,
+      { $push: { documents: document } },
+      { new: true, runValidators: true }
+    );
   }
 };
