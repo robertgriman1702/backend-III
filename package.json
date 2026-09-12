@@ -5,9 +5,10 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
-  },
+  "start": "node src/server.js",
+  "dev": "node --watch src/server.js",
+  "test": "cross-env NODE_ENV=test mocha test/**/*.test.js --timeout 10000 --exit"
+},
   "dependencies": {
     "@faker-js/faker": "^10.6.0",
     "cors": "^2.8.5",
@@ -20,6 +21,10 @@
     "winston": "^3.19.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "chai": "^6.2.2",
+    "cross-env": "^10.1.0",
+    "mocha": "^12.0.1",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.2.2"
   }
 }
